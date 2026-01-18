@@ -55,7 +55,7 @@ Siga os passos abaixo para rodar a aplicação em seu ambiente local.
 
 1.  **Clone o repositório**
     ```bash
-    git clone [https://github.com/SEU-USUARIO/autou-inbox.git](https://github.com/SEU-USUARIO/autou-inbox.git)
+    git clone [https://github.com/niltongms/autou-inbox.git](https://github.com/niltongms/autou-inbox.git)
     cd autou-inbox
     ```
 
