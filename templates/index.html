@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoU - Classificador Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#001529] text-white font-inter min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-5xl bg-[#1a2c45]/90 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-700 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+
+        <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r border-slate-700/50">
+            <h1 class="text-3xl font-extrabold text-white mb-2">
+                AutoU <span class="text-[#D4A017]">Inbox</span>
+            </h1>
+            <p class="text-slate-400 mb-8">Triagem automatizada de emails.</p>
+
+            <form id="meuFormulario" class="space-y-6">
+                <div class="group relative">
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Upload de Arquivo (.pdf/.txt)</label>
+                    <div class="border-2 border-dashed border-slate-600 rounded-xl p-8 text-center hover:border-[#D4A017] hover:bg-[#001529]/50 transition-all cursor-pointer">
+                        <input type="file" name="file" id="inputFile" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="text-slate-400 group-hover:text-[#D4A017] transition-colors">
+                            <span class="text-2xl">📂</span>
+                            <p class="mt-2 text-sm">Arraste ou clique</p>
+                            <p id="nomeArquivo" class="text-xs mt-1 text-[#D4A017] font-bold h-4"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-slate-600 text-sm">
+                    <span class="h-px bg-slate-700 flex-1"></span>OU<span class="h-px bg-slate-700 flex-1"></span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Cole o Texto</label>
+                    <textarea name="texto_direto" rows="4" class="w-full bg-[#001529]/60 border border-slate-700 rounded-xl p-4 text-slate-300 focus:outline-none focus:border-[#D4A017] transition-all" placeholder="Conteúdo do email..."></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-[#D4A017] hover:bg-[#b38714] text-[#001529] font-bold py-4 rounded-xl shadow-lg transform transition hover:scale-[1.02]">
+                    Analisar Email
+                </button>
+            </form>
+
+            <div id="loading" class="hidden mt-6 flex justify-center items-center gap-3">
+                <div class="loader"></div>
+                <span class="text-[#D4A017] animate-pulse font-semibold">Processando inteligência...</span>
+            </div>
+            
+            <div id="erroMsg" class="hidden mt-4 p-3 bg-red-900/50 border border-red-500/50 rounded-lg text-red-200 text-sm text-center"></div>
+        </div>
+
+        <div class="bg-[#0b1623]/60 p-8 md:p-12 flex flex-col justify-center relative">
+            <div id="estadoVazio" class="text-center opacity-40">
+                <div class="text-6xl mb-4 text-[#D4A017] grayscale opacity-50">🚀</div>
+                <h3 class="text-xl font-semibold text-white">Aguardando dados</h3>
+                <p class="text-sm text-slate-400">Envie um email para ver a mágica.</p>
+            </div>
+
+            <div id="resultados" class="hidden flex flex-col gap-6 fade-in-up">
+                <div class="bg-[#001529] p-5 rounded-2xl border border-slate-700/50 shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold mb-2">Classificação</p>
+                    <div id="badgeClassificacao"></div>
+                </div>
+
+                <div class="bg-[#001529] p-5 rounded-2xl border border-slate-700/50 shadow-lg flex-1">
+                    <div class="flex justify-between items-center mb-3">
+                        <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Sugestão de Resposta</p>
+                        <button onclick="copiarResposta()" class="text-xs text-[#D4A017] hover:text-white transition-colors flex items-center gap-1 font-bold">COPIAR</button>
+                    </div>
+                    <div id="textoResposta" class="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap font-mono"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
