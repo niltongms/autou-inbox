@@ -21,6 +21,20 @@ form.addEventListener('submit', async function(e) {
     erroMsg.classList.add('hidden');
     estadoVazio.classList.add('hidden');
 
+    if (inputFile.files.length > 0) {
+        const tamanhoArquivo = inputFile.files[0].size;
+        const tamanhoMaximo = 18 * 1024 * 1024; // 18MB
+
+        if (tamanhoArquivo > tamanhoMaximo) {
+            // Se for grande demais: Mostra erro, esconde loader e PARA TUDO.
+            erroMsg.textContent = "O arquivo é muito grande! O limite máximo é 18MB.";
+            erroMsg.classList.remove('hidden');
+            loading.classList.add('hidden');
+            estadoVazio.classList.remove('hidden');
+            return; // O comando 'return' impede que o código continue para o 'fetch'
+        }
+    }
+
     const formData = new FormData(form);
 
     try {

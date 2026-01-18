@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 from ai_core import extrair_texto, analisar_email
+from werkzeug.exceptions import RequestEntityTooLarge 
 import os
 
 app = Flask(__name__)
+
+#Configura o tamanho máximo do arquivo para upload
+app.config['MAX_CONTENT_LENGTH'] = 18 * 1024 * 1024
+
 
 # Rota que mostra o site (HTML)
 @app.route('/')
@@ -33,6 +38,12 @@ def processar():
 
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+    
+@app.errorhandler(RequestEntityTooLarge)
+def handle_file_too_large(e):
+    # Retorna JSON para o JavaScript ler
+    return jsonify({"erro": "O arquivo é muito grande! O limite máximo é 18MB."}), 413
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
