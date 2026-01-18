@@ -63,7 +63,40 @@ form.addEventListener('submit', async function(e) {
     }
 });
 
+// UX: Botão "Fazer Nova Análise" 
+
+document.getElementById('btnReset').addEventListener('click', function() {
+    form.reset();
+    
+    nomeArquivo.textContent = '';
+    
+    document.getElementById('resultados').classList.add('hidden');
+    document.getElementById('estadoVazio').classList.remove('hidden');
+    
+    document.getElementById('erroMsg').classList.add('hidden');
+    
+    document.querySelector('textarea[name="texto_direto"]').focus();
+});
+
+// Copiar
+
 function copiarResposta() {
-    navigator.clipboard.writeText(document.getElementById('textoResposta').innerText);
-    alert('Copiado!');
+    const texto = document.getElementById('textoResposta').innerText;
+    
+    navigator.clipboard.writeText(texto).then(() => {
+        // Pega o elemento do Toast
+        const toast = document.getElementById('toast');
+        
+        // MOSTRA O TOAST
+        // Remove as classes que escondem e adiciona as que mostram
+        toast.classList.remove('opacity-0', 'translate-y-10'); 
+        
+        // ESPERA 3 SEGUNDOS E ESCONDE
+        setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-10');
+        }, 3000);
+
+    }).catch(err => {
+        console.error('Erro ao copiar:', err);
+    });
 }
