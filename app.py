@@ -60,7 +60,7 @@ def processar():
 # Tratamento de erro para arquivos grandes
 @app.errorhandler(RequestEntityTooLarge)
 def handle_file_too_large(e):
-    return jsonify({"erro": "O arquivo é muito grande! O limite máximo é 16MB."}), 413
+    return jsonify({"erro": "O arquivo é muito grande! O limite máximo é 18MB."}), 413
 
 if __name__ == '__main__':
     app.run(debug=True)
